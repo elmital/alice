@@ -16,12 +16,12 @@ import org.alicebot.ab.MagicStrings;
 import org.alicebot.ab.PCAIMLProcessorExtension;
 import org.alicebot.ab.utils.IOUtils;
 
-public class Main {
+public class Alice {
     public static void main(String[] args) {
         MagicStrings.root_path = System.getProperty("user.dir");
         System.out.println("Working Directory = " + MagicStrings.root_path);
         AIMLProcessor.extension = new PCAIMLProcessorExtension();
-        Main.mainFunction(args);
+        Alice.mainFunction(args);
     }
 
     public static void mainFunction(String[] args) {
@@ -49,10 +49,10 @@ public class Main {
             bot.brain.printgraph();
         }
         switch (action) {
-            case "chat" -> Main.testChat(bot, MagicBooleans.trace_mode);
-            case "test" -> Main.testSuite(bot, MagicStrings.root_path + "/data/find.txt");
-            case "ab" -> Main.testAB(bot);
-            case "aiml2csv", "csv2aiml" -> Main.convert(bot, action);
+            case "chat" -> Alice.testChat(bot, MagicBooleans.trace_mode);
+            case "test" -> Alice.testSuite(bot, MagicStrings.root_path + "/data/find.txt");
+            case "ab" -> Alice.testAB(bot);
+            case "aiml2csv", "csv2aiml" -> Alice.convert(bot, action);
             case "abwq" -> AB.abwq(bot);
         }
     }
@@ -92,7 +92,7 @@ public class Main {
                 continue;
             }
             if (textLine.equals("ab")) {
-                Main.testAB(bot);
+                Alice.testAB(bot);
                 continue;
             }
             String request = textLine;
