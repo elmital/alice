@@ -1,0 +1,58 @@
+plugins {
+    id "java"
+    id 'application'
+    id "com.github.johnrengelman.shadow" version "7.1.2" //Dependency shadow
+}
+
+
+//Plugin information
+group 'me.apoudra.alice'
+version '1.0.0-SNAPSHOT'
+
+mainClassName = group + '.Alice'
+
+defaultTasks 'build'
+
+//Java version
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+
+//Dependencies repositories
+repositories {
+    mavenCentral()
+    //Shadowing flatJar directory
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+//Dependencies
+dependencies {
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+    implementation 'joda-time:joda-time:2.11.1'
+    implementation group: 'org.json', name: 'json', version: '20220320'
+}
+
+//Tasks
+tasks.compileJava {
+    options.compilerArgs = ["-parameters"]
+    options.encoding = 'UTF-8'
+}
+
+//Shadowing dependencies
+shadowJar {
+    archiveClassifier.set('')
+    manifest {
+        attributes(
+                'Main-Class': {group}
+        )
+    }
+}
+
+//Shadow
+artifacts {
+    archives shadowJar
+}
+
+build.dependsOn(shadowJar)
